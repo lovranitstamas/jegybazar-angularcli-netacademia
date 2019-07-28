@@ -1,0 +1,20 @@
+<ng-container *ngIf="(ticket$ | async) as ticket; else loading">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm order-md-2">
+        <app-eventcard [esemeny]="ticket.event" nextLabel="Esemény megtekintése"></app-eventcard>
+      </div>
+      <div class="col-sm-12 col-md-8">
+        <app-ticket-details-card [loading]="progressRefreshTicket" [ticket]="ticket"></app-ticket-details-card>
+
+        <app-bidding-card (bid)="onBid()" [isLoggedIn]="isLoggedIn$ | async" [ticket]="ticket"
+        ></app-bidding-card>
+      </div>
+    </div>
+  </div>
+  <!-- TODO: when remove mocked chat service [roomId]="ticket.id"-->
+  <app-chat-window *ngIf="isLoggedIn$ | async"></app-chat-window>
+</ng-container>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

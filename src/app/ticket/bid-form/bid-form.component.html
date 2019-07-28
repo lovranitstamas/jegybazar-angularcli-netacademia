@@ -1,0 +1,53 @@
+<alert type="success" dismissOnTimeout="5000" *ngIf="submitSuccessAlert">
+  Licitedet rögzítettük
+</alert>
+<alert type="danger" *ngIf="submitErrorAlert">
+  Valami hiba történt... Probáld meg újra vagy jelezd a support-nak!
+</alert>
+<div class="row" *ngIf="displayBidStep; else bidWithValue">
+  <div class="col-12">
+    <div class="row">
+      <div class="col">
+        <button [disabled]="disabled" class="btn btn-primary text-light" (click)="onBidWithBidStep()">
+          Licit a következő legkisebb licittel: {{ticket.currentBid+ticket.bidStep}} Ft
+        </button>
+      </div>
+      <div class="col" *ngIf="disabled">
+        <app-loading-spinner [loaderWidth]="35" [loaderHeight]="35"></app-loading-spinner>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <a href="#" (click)="displayBidWithStep($event)" [ngClass]="{'disabled':disabled}">Inkább megadom én a licit
+      értékét</a>
+  </div>
+</div>
+<ng-template #bidWithValue>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-6">
+        <input
+          [ngClass]="{'is-invalid':submitted && form.get('bid').invalid}"
+          formControlName="bid"
+          type="number"
+          class="form-control"
+          placeholder="Add meg a licitértékedet"
+        />
+        <div class="invalid-feedback" *ngIf="submitted && form.get('bid').hasError('required')">
+          Kötelező licit értéket megadni
+        </div>
+        <div class="invalid-feedback" *ngIf="submitted && form.get('bid').hasError('validateMinimumBid')">
+          Minimum lict amit tehetsz: {{ticket.currentBid+ticket.bidStep}} Ft.
+        </div>
+      </div>
+      <div class="col-6">
+        <button *ngIf="disabled == false;else loadingSubmit" type="submit" class="btn btn-primary text-light"
+                role="button">Licitálok
+        </button>
+        <ng-template #loadingSubmit>
+          <app-loading-spinner [loaderWidth]="30" [loaderHeight]="30"></app-loading-spinner>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+</ng-template>

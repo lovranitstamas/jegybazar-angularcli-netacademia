@@ -1,0 +1,48 @@
+<div class="row  justify-content-around px-5 .d-inline-block">
+
+  <div class="col-auto text-center">
+    <label>Keresés a jegyek között</label>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Esemény neve">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Keresés
+      </button>
+    </form>
+  </div>
+
+  <div class="my-2 my-lg-0 text-center" *ngIf="userService.isLoggedIn$ | async">
+    <div>
+      <label>Jegyet szeretnék létrehozni</label>
+    </div>
+    <div class="w-100"></div>
+    <div><a routerLink="/ticket/new" class="btn btn-primary" role="button">Új jegy
+      léterhozása</a></div>
+  </div>
+
+</div>
+
+<table class="table table-responsive table-hover text-center mt-5">
+  <thead>
+  <tr>
+    <th class="text-center">Esemény neve</th>
+    <th class="text-center">Időpont</th>
+    <th class="text-center d-none d-md-table-cell">Előadó neve</th>
+    <th class="text-center d-none d-md-table-cell">Hány db?</th>
+    <th class="text-center">Licitek megtekintése</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let ticket of tickets$ | async">
+    <td scope="row">
+      <a [routerLink]="['/event', ticket.eventId]">
+        {{ ticket.event.name }}
+      </a>
+    </td>
+    <td>{{ ticket.date }}</td>
+    <td class="d-none d-md-table-cell">{{ ticket.seller.name }}</td>
+    <td class="d-none d-md-table-cell">{{ ticket.numberOfTickets }}</td>
+    <td><a [routerLink]="['/ticket', ticket.id]">Tovább a licithez</a></td>
+  </tr>
+
+  </tbody>
+</table>

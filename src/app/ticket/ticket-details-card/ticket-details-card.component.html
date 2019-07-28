@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Jegy adatai
+      <app-loading-spinner *ngIf="loading" class="float-right" [loaderWidth]="20"
+                           [loaderHeight]="20"></app-loading-spinner>
+    </h4>
+    <div class="row">
+      <div class="col-sm-12 col-md-3 label-row">Eladó neve:</div>
+      <div class="col-sm-12 col-md-9">{{ticket.seller.name}}</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-3 label-row">Darabszám:</div>
+      <div class="col-sm-12 col-md-9">{{ticket.numberOfTickets}} db</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-3 label-row">Érvényesség:</div>
+      <div class="col-sm-12 col-md-9">{{ticket.bidEndDate | amFromUnix | amDateFormat:'LLL'}}</div>
+    </div>
+    <div class="row">
+      <div class="col-12"><p class="mt-2">{{ticket.details}}</p></div>
+    </div>
+  </div>
+</div>
