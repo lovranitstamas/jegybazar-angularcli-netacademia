@@ -35,7 +35,7 @@ export const chatServiceProvideFactoryFn =
   ]
 })
 export class ChatModule {
-  static forRoot(): ModuleWithProviders {
+  /*static forRoot(): ModuleWithProviders {
     return {
       ngModule: ChatModule,
       providers: [
@@ -46,5 +46,5 @@ export class ChatModule {
         }
       ]
     };
-  }
+  }*/
 }
