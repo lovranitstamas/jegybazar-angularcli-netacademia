@@ -5,7 +5,8 @@ import {
   ElementRef,
   Input,
   OnInit,
-  ViewChild
+  ViewChild,
+  AfterViewInit
 } from '@angular/core';
 import 'rxjs/add/operator/skip';
 import { environment } from '../../../environments/environment';
@@ -22,7 +23,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ChatService]
 })
-export class ChatWindowComponent implements OnInit, AfterViewChecked {
+export class ChatWindowComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() roomId;// = environment.production ? null : MockedChatDatas.mockedRoomId;
   resetForm = false;
   chatMessage$: Observable<ChatMessageModel[]>;
@@ -34,9 +35,17 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
   ) {
   }
 
+  ngAfterViewInit(): void {
+    window.setTimeout(() => {
+      //this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+      document.querySelector('#card-body').scrollTop = this.cardBody.nativeElement.scrollHeight;
+    },500);    
+  }
+
   ngAfterViewChecked(): void {
     if (this.shouldScrolling) {
-      this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+      //this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+      document.querySelector('#card-body').scrollTop = this.cardBody.nativeElement.scrollHeight;
       this.shouldScrolling = false;
     }
   }

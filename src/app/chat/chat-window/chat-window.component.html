@@ -2,7 +2,7 @@
   <div class="card-header">
     Chat
   </div>
-  <div class="card-body" #cardBody>
+  <div class="card-body" #cardBody id="card-body">
     <ng-container *ngIf="chatMessage$ | async as chatMessages; else loadingChat">
       <ng-container *ngIf="chatMessages.length > 0;else notFoundMessage">
         <ul class="chat-messages-list">
