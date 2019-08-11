@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
-import { UserModel } from '../../shared/user-model';
-import { UserService } from '../../shared/user.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subject} from 'rxjs/Subject';
+import {UserModel} from '../../shared/user-model';
+import {UserService} from '../../shared/user.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -11,6 +11,7 @@ import { UserService } from '../../shared/user.service';
 })
 export class ProfileEditComponent implements OnInit, OnDestroy {
   user: UserModel;
+  registerMode = false;
 
   private _destroy$ = new Subject();
 
@@ -22,7 +23,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._userService.getCurrentUser().subscribe(
-      user => this.user = user
+      user => {
+        this.user = user;
+        if (user == null) {
+          this.registerMode = true;
+          this.user = new UserModel();
+        }
+      }
     );
   }
 
@@ -37,19 +44,19 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   // ezert alap viselkedesnek bekotottuk az save-t
   // ami a submit tipusu gomb megnyomasara hivodik meg ngSubmit-en keresztul
   updateUser() {
-    this._userService.save(this.user)
-      .takeUntil(this._destroy$)
-      .subscribe(
-        data => this._goToProfile(),
-        err => console.warn('user save kozben problemank adodott: ', err)
-      );
+    this._userService.save(this.user);
+    this._goToProfile();
+    /*.takeUntil(this._destroy$)
+    .subscribe(
+      data => this._goToProfile(),
+      err => console.warn('user save kozben problemank adodott: ', err)
+    );*/
   }
 
   // ha regisztracios esetben vagyunk akkor viszont __NEM__ hasznalunk submit buttont
   // hanem sima type="button"-t es (click)-re hivjuk meg a create-t
   createUser(pass: string) {
     this._userService.register(this.user, pass)
-      .takeUntil(this._destroy$)
       .subscribe(
         data => this._goToProfile(),
         err => console.warn('registracio kozben problemank adodott: ', err)
