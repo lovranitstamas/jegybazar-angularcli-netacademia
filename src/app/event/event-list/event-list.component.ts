@@ -18,10 +18,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 })
 export class EventListComponent implements OnInit, AfterViewInit {
 // ez jo pelda lehet smart es dumb componentre
-  public eventsGrouppedBy3: EventModel[];
+  // public eventsGrouppedBy3: EventModel[];
+  // public events$: Observable<EventModel[]>;
+  // public events: EventModel[];
+  // public eventsGrouppedBy3$: Observable<EventModel[][]>;
   public events$: Observable<EventModel[]>;
-  public events: EventModel[];
-  public eventsGrouppedBy3$: Observable<EventModel[][]>;
   @ViewChild('searchInput') searchInput: ElementRef;
   private filteredText$ = new BehaviorSubject<string>(null);
 
@@ -32,7 +33,7 @@ export class EventListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.searchInput);
+    // console.log(this.searchInput);
     Observable.fromEvent(this.searchInput.nativeElement, 'keyup')
       .delay(600)
       .map(
@@ -52,7 +53,7 @@ export class EventListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.eventsGrouppedBy3$ = this._eventService.getAllEvents()
+    this.events$ = this._eventService.getAllEvents()
       .flatMap(
         events => {
           return this.filteredText$.map(
@@ -69,8 +70,8 @@ export class EventListComponent implements OnInit, AfterViewInit {
             }
           );
         }
-      )
-      .map(data => {
+      );
+      /*.map(data => {
         return data.reduce((acc: Array<any>, curr: EventModel, ind: number) => {
           if (ind % 3 === 0) {
             acc.push([]);
@@ -78,7 +79,7 @@ export class EventListComponent implements OnInit, AfterViewInit {
           acc[acc.length - 1].push(curr);
           return acc;
         }, []);
-      });
+      });*/
 
     // this._eventService.getAllEvents().subscribe(data => {
     //   this.eventsGrouppedBy3 = data.reduce((acc, curr: EventModel, ind: number) => {

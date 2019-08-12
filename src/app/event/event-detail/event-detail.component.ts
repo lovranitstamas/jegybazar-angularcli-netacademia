@@ -41,7 +41,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       this._eventService.getEventById(evId)
         .takeUntil(this._destroy$)
         .subscribe(evm => this.event = evm);
-      console.log('kaptunk eventid-t', evId);
+      // console.log('kaptunk eventid-t', evId);
     }
   }
 

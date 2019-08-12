@@ -13,26 +13,26 @@
     </div>
     <div class="w-100"></div>
     <div><a routerLink="./new" class="btn btn-primary" role="button">Új esemény
-      léterhozása</a></div>
+      létrehozása</a></div>
   </div>
 
 </div>
 
 
-<div class="card-deck pt-5 pb-5" *ngFor="let evg of eventsGrouppedBy3$ | async">
-  <app-eventcard class="col col-md-6 col-lg-4"
-                 *ngFor="let ev of evg"
-                 [esemeny]="ev"
+<div class="card-columns mt-5">
+  <app-eventcard
+    *ngFor="let event of events$ | async"
+    [esemeny]="event"
   >
   </app-eventcard>
 </div>
 
 <!--<div class="card-deck pt-5 pb-5" *ngFor="let evg of eventsGrouppedBy3">-->
-  <!--<app-eventcard class="col col-md-6 col-lg-4"-->
-                 <!--*ngFor="let ev of evg"-->
-                 <!--[esemeny]="ev"-->
-  <!--&gt;-->
-  <!--</app-eventcard>-->
+<!--<app-eventcard class="col col-md-6 col-lg-4"-->
+<!--*ngFor="let ev of evg"-->
+<!--[esemeny]="ev"-->
+<!--&gt;-->
+<!--</app-eventcard>-->
 <!--</div>-->
 
 <!--<app-eventcard class="col col-md-6 col-lg-4"-->
