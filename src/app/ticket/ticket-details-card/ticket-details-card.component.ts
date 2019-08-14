@@ -13,7 +13,7 @@ export class TicketDetailsCardComponent implements AfterViewInit, OnChanges {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+   // console.log(changes);
     if (changes['loading'] != null
       && changes['loading'].currentValue !== changes['loading'].previousValue) {
       this.cdr.detectChanges();

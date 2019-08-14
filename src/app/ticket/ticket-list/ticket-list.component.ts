@@ -11,8 +11,7 @@ import { UserService } from '../../shared/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketListComponent implements OnInit {
-  // tickets$: Observable<TicketModel[]>;
-  tickets$: Observable<any[]>;
+   tickets$: Observable<TicketModel[]>;
 
   constructor(
     private _ticketService: TicketService,

@@ -1,17 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
-import { TicketModel } from '../../shared/ticket-model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { bidMinimumValidator } from './bid.validators';
-import { BidService } from '../../shared/bid.service';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {TicketModel} from '../../shared/ticket-model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {bidMinimumValidator} from './bid.validators';
+import {BidService} from '../../shared/bid.service';
 
 @Component({
   selector: 'app-bid-form',
@@ -28,19 +19,22 @@ export class BidFormComponent implements OnInit, OnChanges {
   submitSuccessAlert = false;
   submitErrorAlert = false;
   disabled = false;
+  buttonNextBidLabel: number;
 
   constructor(
     private fb: FormBuilder,
     private bidService: BidService
-  ) {}
+  ) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['ticket'] != null
       && !changes['ticket'].isFirstChange()
       && changes['ticket'].currentValue != null) {
       this.disabled = false;
-      this.form.reset({ bid: null });
+      this.form.reset({bid: null});
       this.form.get('bid').enable();
+      this.buttonNextBidLabel = +this.ticket.currentBid + +this.ticket.bidStep;
     }
   }
 
@@ -52,16 +46,20 @@ export class BidFormComponent implements OnInit, OnChanges {
           Validators.compose(
             [
               Validators.required,
-              bidMinimumValidator(() => {return this.ticket; })
+              bidMinimumValidator(() => {
+                return this.ticket;
+              })
             ]
           )
         ]
       }
     );
+
+    this.buttonNextBidLabel = +this.ticket.currentBid + +this.ticket.bidStep;
   }
 
   onBidWithBidStep() {
-    this.toBid(this.ticket.currentBid + this.ticket.bidStep)
+    this.toBid(+this.ticket.currentBid + +this.ticket.bidStep)
       .subscribe(
         () => {
           // notification user

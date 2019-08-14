@@ -47,7 +47,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.ticket);
+    // console.log(this.ticket);
     this._subs = this._ticketService.create(this.ticket)
       .subscribe(newTicketId => this._router.navigate(['/ticket']));
   }

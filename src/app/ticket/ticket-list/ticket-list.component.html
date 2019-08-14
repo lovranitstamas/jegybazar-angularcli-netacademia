@@ -15,7 +15,7 @@
     </div>
     <div class="w-100"></div>
     <div><a routerLink="/ticket/new" class="btn btn-primary" role="button">Új jegy
-      léterhozása</a></div>
+      létrehozása</a></div>
   </div>
 
 </div>
@@ -38,7 +38,7 @@
         {{ ticket.event.name }}
       </a>
     </td>
-    <td>{{ ticket.date }}</td>
+    <td>{{ ticket.bidEndDate }}</td>
     <td class="d-none d-md-table-cell">{{ ticket.seller.name }}</td>
     <td class="d-none d-md-table-cell">{{ ticket.numberOfTickets }}</td>
     <td><a [routerLink]="['/ticket', ticket.id]">Tovább a licithez</a></td>

@@ -1,21 +1,41 @@
-import { Injectable } from '@angular/core';
-import { TicketService } from './ticket.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {TicketService} from './ticket.service';
 import 'rxjs/add/operator/mergeMap';
+import {UserService} from './user.service';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class BidService {
 
   constructor(
     private ticketService: TicketService,
-    private http: HttpClient
-  ) { }
+    private _userService: UserService,
+    private afDb: AngularFireDatabase
+  ) {
+  }
 
   bid(ticketId: string, value: number) {
-    // TODO replace userId
-    const userId = 'mBUswvbahhRRDVfbfACIEgx3FKK2';
-    return this.http
+    return this._userService.getCurrentUser()
+      .switchMap(
+        user => {
+          return Observable.fromPromise(this.afDb.object(`bids/${ticketId}/${user.id}`).set(value))
+            .flatMap(
+              () => {
+                return this.ticketService.getOneOnce(ticketId);
+              }
+            )
+            .flatMap(
+              ticket => {
+                return this.ticketService.modify(
+                  Object.assign(ticket, {currentBid: value, bidCounter: ++ticket.bidCounter})
+                );
+              }
+            );
+        }
+      );
+
+    /*return this.http
       .put(`${environment.firebase.baseUrl}/bids/${ticketId}/${userId}.json`, value)
       .flatMap(
         () => {
@@ -28,6 +48,6 @@ export class BidService {
             Object.assign(ticket, { currentBid: value, bidCounter: ++ticket.bidCounter })
           );
         }
-      );
+      );*/
   }
 }

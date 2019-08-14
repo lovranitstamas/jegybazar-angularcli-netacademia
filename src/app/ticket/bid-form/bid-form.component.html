@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col">
         <button [disabled]="disabled" class="btn btn-primary text-light" (click)="onBidWithBidStep()">
-          Licit a következő legkisebb licittel: {{ticket.currentBid+ticket.bidStep}} Ft
+          Licit a következő legkisebb licittel: {{buttonNextBidLabel}} Ft
         </button>
       </div>
       <div class="col" *ngIf="disabled">
@@ -37,7 +37,7 @@
           Kötelező licit értéket megadni
         </div>
         <div class="invalid-feedback" *ngIf="submitted && form.get('bid').hasError('validateMinimumBid')">
-          Minimum lict amit tehetsz: {{ticket.currentBid+ticket.bidStep}} Ft.
+          Minimum lict amit tehetsz: {{ticket.currentBid + ticket.bidStep}} Ft.
         </div>
       </div>
       <div class="col-6">
