@@ -16,7 +16,6 @@ import { EventService } from './event.service';
     CommonModule,
     EventRoutingModule,
     FormsModule,
-
     AlertModule,
     EventcardModule,
     CoreModule

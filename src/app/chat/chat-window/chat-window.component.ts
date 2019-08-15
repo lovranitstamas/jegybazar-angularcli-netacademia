@@ -1,19 +1,8 @@
-import {
-  AfterViewChecked,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-  AfterViewInit
-} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import 'rxjs/add/operator/skip';
-import { environment } from '../../../environments/environment';
-import { MockedChatDatas } from '../mocked-chat.service';
-import { Observable } from 'rxjs/Observable';
-import { ChatMessageModel } from '../model/chat.model';
-import { ChatService } from '../chat.service';
+import {Observable} from 'rxjs/Observable';
+import {ChatMessageModel} from '../model/chat.model';
+import {ChatService} from '../chat.service';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
@@ -37,14 +26,14 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked, AfterViewI
 
   ngAfterViewInit(): void {
     window.setTimeout(() => {
-      //this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+      // this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
       document.querySelector('#card-body').scrollTop = this.cardBody.nativeElement.scrollHeight;
-    },500);    
+    }, 500);
   }
 
   ngAfterViewChecked(): void {
     if (this.shouldScrolling) {
-      //this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+      // this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
       document.querySelector('#card-body').scrollTop = this.cardBody.nativeElement.scrollHeight;
       this.shouldScrolling = false;
     }

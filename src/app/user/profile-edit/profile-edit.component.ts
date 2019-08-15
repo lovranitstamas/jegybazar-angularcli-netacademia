@@ -46,11 +46,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   updateUser() {
     this._userService.save(this.user);
     this._goToProfile();
-    /*.takeUntil(this._destroy$)
-    .subscribe(
-      data => this._goToProfile(),
-      err => console.warn('user save kozben problemank adodott: ', err)
-    );*/
   }
 
   // ha regisztracios esetben vagyunk akkor viszont __NEM__ hasznalunk submit buttont

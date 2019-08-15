@@ -37,7 +37,7 @@
           Kötelező licit értéket megadni
         </div>
         <div class="invalid-feedback" *ngIf="submitted && form.get('bid').hasError('validateMinimumBid')">
-          Minimum lict amit tehetsz: {{ticket.currentBid + ticket.bidStep}} Ft.
+          Minimum lict amit tehetsz: {{buttonNextBidLabel}} Ft.
         </div>
       </div>
       <div class="col-6">

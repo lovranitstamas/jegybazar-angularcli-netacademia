@@ -70,18 +70,11 @@ export class TicketService {
     ticket.bidCounter = 0;
     ticket.currentBid = 0;
     return Observable.fromPromise(this.afDb.list('tickets').push(ticket))
-    // konnyitsuk meg magunknak kicsit az eletunket es kuldjuk tovabb csak azt ami kell nekunk
       .map(resp => resp.key)
-      // ez itt amiatt kell, hogy meglegyen a resp objektumon belul is,
-      // mert kesobb epitunk erre az infora
-      // viszont ezt csak a post valaszaban kapjuk vissza
-      // es legalabb hasznaljuk a patch-et is :)
       .do(
         ticketId => Observable.combineLatest(
           this._saveGeneratedId(ticket, ticketId),
-          // keszitsuk kicsit elo a jovilagot es vezessuk esemenyeknel is a hozzajuk tartozo ticketeket
           this._eventService.addTicket(ticket.eventId, ticketId),
-          // keszitsuk kicsit elo a jovilagot es vezessuk a profilunknal a hozzank tartozo ticketeket
           this._userService.addTicket(ticketId)
         )
       );
@@ -108,7 +101,6 @@ export class TicketService {
 
   modify(ticket: TicketModel) {
     return Observable.fromPromise(this.afDb.object(`tickets/${ticket.id}`).update(ticket));
-    // return this._http.put(`${environment.firebase.baseUrl}/tickets/${ticket.id}.json`, ticket);
   }
 
   private _saveGeneratedId(ticket: TicketModel, ticketId: string) {
