@@ -60,7 +60,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() {
+  /*constructor() {
     firebase.initializeApp(environment.firebase);
-  }
+  }*/
 }
