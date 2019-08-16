@@ -47,7 +47,7 @@ export class TicketService {
   // -----
   // puffancs uzeni: "elkepzelheto", hogy egyszerubb megoldas is van, de szerintem ez szep
   //                 es mar nagyon vagytam valami agyzsibbasztora a projektben :)
-  getAllTickets() {
+  getAllTickets(): Observable<TicketModel[]>  {
     return this.afDb.list('tickets')
       .map(ticketsArray => ticketsArray.map(ticket =>
         Observable.zip(
